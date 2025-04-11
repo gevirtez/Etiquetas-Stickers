@@ -3,7 +3,9 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 from reportlab.lib import colors
 from tkinter import filedialog
+from tkinter import messagebox
 import os
+import sys
 
 # Tamaño de etiqueta
 LABEL_WIDTH = 55 * mm
@@ -34,8 +36,17 @@ def wrap_text_by_width(text, max_width, font_name, font_size, canvas_obj):
     return lines
 
 # Selección del archivo
-excel_path = filedialog.askopenfilename(title="Selecciona el archivo Excel", filetypes=[("Excel Files", "*.xlsx *.xls")])
+excel_path = filedialog.askopenfilename(
+    title="Selecciona el archivo Excel",
+    filetypes=[("Excel Files", "*.xlsx *.xls")]
+)
+
+if not excel_path:
+    messagebox.showinfo("Cancelado", "No se seleccionó ningún archivo. El programa se cerrará.")
+    sys.exit()
+
 df = pd.read_excel(excel_path, skiprows=5)
+
 codigos = df.iloc[:, 3].dropna().astype(str).tolist()
 nombres = df.iloc[:, 5].dropna().astype(str).tolist()
 
