@@ -54,6 +54,9 @@ nombres = df.iloc[:, 5].dropna().astype(str).tolist()
 pdf_path = os.path.join(os.path.dirname(excel_path), "etiquetas_nombre_muestra.pdf")
 c = canvas.Canvas(pdf_path, pagesize=(LABEL_WIDTH, LABEL_HEIGHT))
 
+# Mostrar mensaje de éxito
+messagebox.showinfo("Éxito", f"PDF de etiquetas creado con éxito:\n\n{pdf_path}")
+
 for codigo, nombre in zip(codigos, nombres):
     c.setStrokeColor(colors.black)
     c.setLineWidth(1)
